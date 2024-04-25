@@ -4,12 +4,24 @@ import './product.css'
 function Products() {
   const[products, setProducts]=useState([])
 useEffect(()=>{
-  fetch(`http://localhost:9000/products`)
-  .then(res=>res.json())
-  .then((data)=>{console.log(data);
-     setProducts(data);
-    })
+  getAllProducts()
 },[])
+const getAllProducts=()=>{
+    fetch(`http://localhost:9000/products`)
+    .then(res=>res.json())
+    .then((data)=>{console.log(data);
+       setProducts(data);
+      })
+}
+const deleteProduct=(productid)=>{
+ console.log(productid)
+ fetch(`http://localhost:9000/products/${productid}`,{
+ method: "DELETE"})
+ .then(res=>res.json())
+ .then((data)=>{console.log(data)
+   getAllProducts()
+})
+}
   return (
     <div>
       <h1>Products</h1>
@@ -30,7 +42,7 @@ useEffect(()=>{
         <tr  key={product.id}>
         <td>{product.id}</td>
         <td>{product.title}</td>
-        <td>{product.description}</td>
+        <td>{product.description?.slice(0,40)}</td>
         <td>{product.price}</td>
         <td> 
           <button className='btn btn-danger btn-sm' onClick={()=>deleteProduct(product.id)}>Delete</button>
