@@ -20,7 +20,7 @@ const deleteProduct=(product)=>{
     showCancelButton: true
   }).then(data=>{
     if (data.isConfirmed){   
-  fetch((`http://localhost:9000/products/${productId}`),{
+  fetch(`http://localhost:9000/products/${product.id}`,{
 method:"DELETE"
   })
   .then(res=>res.json())
@@ -54,7 +54,7 @@ method:"DELETE"
         <td>{product.description?.slice(0,40)}</td>
         <td>{product.price}</td>
         <td> 
-          <button className='btn btn-danger btn-sm' onClick={()=>deleteProduct(product.title)}>Delete</button>
+          <button className='btn btn-danger btn-sm' onClick={()=>deleteProduct(product)}>Delete</button>
           <Link to={`/products/${product.id}`} className='btn btn-info btn-sm'>View</Link>
           <button className='btn btn-primary btn-sm'>Edit</button>
         </td>
